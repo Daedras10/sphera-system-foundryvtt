@@ -1,0 +1,33 @@
+{
+    "Actor": {
+        "types": [
+            "PlayerCharacter"
+        ],
+
+        "PlayerCharacter": {
+            "name": "Player Character",
+            "race": "Human"
+        }
+    },
+
+    "Item": {
+        "types": [
+            "Item"
+        ],
+
+        "templates": {
+            "generalItems": {
+                "name": "General Item",
+                "weight": 1,
+                "value": 10,
+                "description": "A general item that can be used in various situations."
+            }
+        },
+
+        "Item": {
+            "templates": ["generalItems"],
+            "type": "item",
+            "quantity": 1
+        }
+    }
+}

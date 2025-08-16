@@ -1,7 +1,7 @@
 {
     "id": "sphera",
     "title": "Sphera",
-    "description": "A system for playing Sphera on FoundryVTT.",
+    "description": "A system for playing Sphera on FoundryVTT, created by Deoidath.",
     "version": "0.1",
     "compatibility": {
         "minimum": "12.331",
@@ -10,15 +10,19 @@
     "authors": [
         {
             "name": "Deoidath",
+            "discord": "deoidathbloodfallen",
             "url": "..."
         }
     ],
     "esmodules": [
+        "sphera.js"
     ],
     "styles": [
+        "sphera.css"
     ],
     "packs": [],
     "languages": [],
+    "socket": false,
     "grid": {
         "distance": 1.5,
         "units": "m"
