@@ -1,0 +1,28 @@
+{
+    "id": "sphera",
+    "title": "Sphera",
+    "description": "A system for playing Sphera on FoundryVTT.",
+    "version": "0.1",
+    "compatibility": {
+        "minimum": "12.331",
+        "verified": "13.335"
+    },
+    "authors": [
+        {
+            "name": "Deoidath",
+            "url": "..."
+        }
+    ],
+    "esmodules": [
+    ],
+    "styles": [
+    ],
+    "packs": [],
+    "languages": [],
+    "grid": {
+        "distance": 1.5,
+        "units": "m"
+    },
+    "primaryTokenAttribute": "attributes.hp",
+    "initiative": "@attributes.speed.dices D10 + @attributes.speed.modifier"
+}
