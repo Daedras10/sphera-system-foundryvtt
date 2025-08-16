@@ -31,9 +31,7 @@ Hooks.once("ready", async () => {
 function preloadHandlebarsTemplates() {
 
     const templatePaths = [
-
-        // "systems/nether/templates/partials/template.hbs",
-
+        // "systems/sphera/templates/partials/template.hbs",
     ];
     
     return loadTemplates(templatePaths);
