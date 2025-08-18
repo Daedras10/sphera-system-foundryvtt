@@ -5,8 +5,84 @@
         ],
 
         "PlayerCharacter": {
-            "name": "Player Character",
-            "race": "Human"
+            "surnom": "",
+            "race": 0,
+            "sex": 0,
+            "age": 0,
+            "gabarit": 0,
+            "strengthFactor": 0,
+            "height": 0,
+            "weight": 0,
+
+            "xp" : {
+                "current": 0,
+                "next": 4,
+                "level": 1
+            },
+
+            "attributes": {
+                "strength": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "endurance": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "speed": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "agility": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "address": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+
+                "charisma": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "perception": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "intellect": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "willpower": {
+                    "dices": 0,
+                    "modifiers": 0
+                },
+                "magic": {
+                    "dices": 0,
+                    "modifiers": 0
+                }
+            },
+
+            "skills": {
+                "TODO": "Define skills here"
+            },
+
+
+            "actions": {
+                "offensive": 1,
+                "reactive": 1,
+                "broutiles": 1,
+                "discussion": 1
+            },
+
+            "movement": {
+                "walk": 0,
+                "run": 0,
+                "fly": 0,
+                "swim": 0,
+                "climb": 0
+            }
         }
     },
 
