@@ -1,109 +1,184 @@
 {
-    "Actor": {
-        "types": [
-            "PlayerCharacter"
-        ],
-
-        "PlayerCharacter": {
-            "surnom": "",
-            "race": 0,
-            "sex": 0,
-            "age": 0,
-            "gabarit": 0,
-            "strengthFactor": 0,
-            "height": 0,
-            "weight": 0,
-
-            "xp" : {
-                "current": 0,
-                "next": 4,
-                "level": 1
-            },
-
-            "attributes": {
-                "strength": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "endurance": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "speed": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "agility": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "address": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-
-                "charisma": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "perception": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "intellect": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "willpower": {
-                    "dices": 0,
-                    "modifiers": 0
-                },
-                "magic": {
-                    "dices": 0,
-                    "modifiers": 0
-                }
-            },
-
-            "skills": {
-                "TODO": "Define skills here"
-            },
-
-
-            "actions": {
-                "offensive": 1,
-                "reactive": 1,
-                "broutiles": 1,
-                "discussion": 1
-            },
-
-            "movement": {
-                "walk": 0,
-                "run": 0,
-                "fly": 0,
-                "swim": 0,
-                "climb": 0
-            }
+  "Actor": {
+    "types": [
+      "PlayerCharacter",
+      "NPC",
+      "Swarm",
+      "Group"
+    ],
+    
+    "templates": {
+      "baseAttributes": {
+        "name": "",
+        "attributes": {
+          "strength": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "endurance": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "speed": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "agility": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "address": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "charisma": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "perception": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "intellect": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "willpower": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          },
+          "magic": {
+            "dices": 0,
+            "levelModifiers": 0,
+            "modifiers": 0
+          }
+        },
+        "gabarit": 2,
+        "strengthFactor": 2,
+        "hp": {
+          "current": 0,
+          "max": 0,
+          "temp": 0,
+          "lightWounds": 0,
+          "heavyWounds": 0,
+          "deadlyWounds": 0
+        },
+        "blood": {
+          "current": 0,
+          "max": 0
+        },
+        "armor": {
+          "current": 0,
+          "max": 0,
+          "RB": [],
+          "RE": [],
+          "BDP": 0,
+          "DS": 0
+        },
+        "speed": {
+          "walk": 0,
+          "fly": 0,
+          "swim": 0,
+          "climb": 0
         }
+      },
+      "baseSkills": {
+        "combatSkills": [],
+        "craftSkills": [],
+        "socialSkills": [],
+        "magicSkills": []
+      },
+      "baseActions": {
+        "offensive": 1,
+        "reactive": 1,
+        "movement": 1,
+        "broutiles": 0,
+        "discussion": 0
+      }
+    },
+
+    "PlayerCharacter": {
+      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "type": "PlayerCharacter",
+      "surname": "",
+      "race": "",
+      "sex": 0,
+      "age": 0,
+      "height": 0,
+      "weight": 0,
+      "xp" : {
+        "current": 0,
+        "next": 4,
+        "level": 1
+      }
+      
+    },
+    
+    "NPC": {
+      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "type": "NPC"
+    },
+    
+    "Swarm": {
+      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "type": "Swarm",
+      "swarmSize": {
+        "current": 0,
+        "max": 0,
+        "sizeCategory": 0
+      }
+    },
+    
+    "Group": {
+      "type": "Group"
+    }
+  },
+
+  "Item": {
+    "types": [
+      "item",
+      "Item",
+      "weapon"
+    ],
+
+    "templates": {
+      "generalItems": {
+        "name": "General Item",
+        "weight": 1,
+        "quantity": 1,
+        "value": 10,
+        "description": "A general item that can be used in various situations."
+      }
+    },
+
+    "item": {
+      "templates": ["generalItems"],
+      "type": "item"
     },
 
     "Item": {
-        "types": [
-            "Item"
-        ],
+      "templates": ["generalItems"],
+      "type": "Item",
+      "Plap": 2
+    },
 
-        "templates": {
-            "generalItems": {
-                "name": "General Item",
-                "weight": 1,
-                "value": 10,
-                "description": "A general item that can be used in various situations."
-            }
-        },
-
-        "Item": {
-            "templates": ["generalItems"],
-            "type": "item",
-            "quantity": 1
-        }
+    "weapon": {
+      "templates": ["generalItems"],
+      "type": "weapon",
+      "attackType": "melee",
+      "usageBonus": 0,
+      "range": 1.5,
+      "damageBonus": 0,
+      "damageType": ["slashing", "piercing", "bludgeoning"]
     }
+  }
 }
