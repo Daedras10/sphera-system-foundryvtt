@@ -1,0 +1,17 @@
+{
+  "sphera": {
+    "attackTypes": {
+      "none": "",
+      "melee": "Combat rapproché",
+      "ranged": "Combat à distance",
+      "mechanical": "Armes mécaniques",
+      "magic": "Magie"
+    },
+    "weapon": {
+      "attackType": "Type d'attaque",
+      "usageBonus": "Bonus d'utilisation",
+      "range": "Portée",
+      "damageBonus": "Dégâts bonus"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "sphera": {
+    "attackTypes": {
+      "none": "",
+      "melee": "Melee Combat",
+      "ranged": "Ranged Combat",
+      "mechanical": "Mechanical Combat",
+      "magic": "Magic"
+    },
+    "weapon": {
+      "attackType": "Attack Type",
+      "usageBonus": "Bonus while using",
+      "range": "Range",
+      "damageBonus": "Damage bonus"
+    }
+  }
+}
