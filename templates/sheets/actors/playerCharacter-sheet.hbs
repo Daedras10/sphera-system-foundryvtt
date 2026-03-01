@@ -1,5 +1,97 @@
-<form class="" autocomplete="off">
-    <div class="sidebar">
-        
+<form class="actor-sheet {{cssClass}}" autocomplete="off">
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64"/>
+        <h1><input name="system.name" type="text" value="{{actor.name}}" placeholder="{{localize 'sphera.name'}}" data-dtype="String" /></h1>
+    </header>
+    
+    <div class="">
+        <h1>Hello ?</h1>
     </div>
+    <div class="tab characteristics active" data-group="primary" data-tab="characteristics">
+        {{!-- Characteristics Scores --}}
+        <div class="grid grid-6col">
+            <h1>Tab1 - Characteristics</h1>
+            <table>
+                <tr>
+                    <th colspan="4">{{localize 'sphera.characteristics.reserve.title'}}</th>
+                    <th colspan="5">{{localize 'sphera.characteristics.title'}}</th>
+                </tr>
+                <tr>
+                    <th rowspan="2">{{localize 'sphera.characteristics.reserve.physical'}}</th>
+                    <td rowspan="2">{{ system.reserve.physical.current }}</td>
+                    <td rowspan="2">/{{ system.reserve.physical.max }}</td>
+                    <td rowspan="2">{{ system.reserve.mental.malus }}</td>
+                    
+                    <th>Force</th>
+                    <th>Endurance</th>
+                    <th>Vitesse</th>
+                    <th>Agilité</th>
+                    <th>Adresse</th>
+                </tr>
+                <tr>
+                    <td>{{ system.attributes.strength.dices }}D10{{ system.attributes.strength.text }}</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                </tr>
+                <tr>
+                    <th rowspan="2">{{localize 'sphera.characteristics.reserve.mental'}}</th>
+                    <td rowspan="2">{{ system.reserve.mental.current }}</td>
+                    <td rowspan="2">/{{ system.reserve.mental.max }}</td>
+                    <td rowspan="2">{{ system.reserve.mental.malus }}</td>
+
+                    <th>Charisme</th>
+                    <th>Perception</th>
+                    <th>Intelligence</th>
+                    <th>Volonté</th>
+                    <th>Magie</th>
+                </tr>
+                <tr>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                    <td>2D10</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    {{!-- Owned Items Tab --}}
+    <div class="tab items active" data-group="primary" data-tab="items">
+        <h1>Tab2</h1>
+        {{numberInput system.attributes.strength.dices name="system.attributes.strength.dices"}}
+        <input type="checkbox" name="system.sheetActions.isEditMode" {{#if system.sheetActions.isEditMode}}checked{{/if}}/>
+
+        {{#if system.sheetActions.isEditMode }}
+        <h1>EditMode</h1>
+        {{else}}
+            <h1>Not EditMode</h1>
+        {{/if}}
+    </div>
+
+    
+
+
+
+    <section class="items">
+        <h3 class="noborder">Owned Items rire</h3>
+        <ol class="actor-items">
+            {{#each actor.items as |item id|}}
+                <li class="actor-item" data-item-id="{{id}}">
+                    <div class="item-name">
+                        <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
+                        <h4>{{item.name}}</h4>
+                    </div>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+            {{/each}}
+        </ol>
+    </section>
+    
 </form>

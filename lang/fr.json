@@ -12,6 +12,26 @@
       "usageBonus": "Bonus d'utilisation",
       "range": "Portée",
       "damageBonus": "Dégâts bonus"
+    },
+    "characteristics": {
+      "title": "Caractéristiques",
+      "attributes": {
+        "strength": "Force",
+        "endurance": "Endurance",
+        "speed": "Vitesse",
+        "agility": "Agilité",
+        "address": "Adresse",
+        "charisma": "Charisme",
+        "perception": "Perception",
+        "intellect": "Intelligence",
+        "willpower": "Volonté",
+        "magic": "Magie"
+      },
+      "reserve": {
+        "physical": "Physique (RP)",
+        "mental": "Mentale (RM)",
+        "title": "Réserves"
+      }
     }
   }
 }

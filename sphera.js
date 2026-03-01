@@ -1,6 +1,6 @@
 import { sphera } from "./modules/config.js";
 import SpheraItemSheet from "./modules/sheets/SpheraItemSheet.js";
-import SpheraCharacterSheet from "./modules/sheets/spheraCharacterSheet.js";
+import SpheraCharacterSheet from "./modules/sheets/SpheraCharacterSheet.js";
 
 Hooks.once("init", async () => {
 
