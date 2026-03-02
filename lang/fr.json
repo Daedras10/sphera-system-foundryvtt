@@ -32,6 +32,17 @@
         "mental": "Mentale (RM)",
         "title": "Réserves"
       }
+    },
+    "sheet": {
+      "actorFunctions": {
+        "addItem": "Ajouter un objet",
+        "edit": "Éditer",
+        "delete": "Supprimer"
+      },
+
+      "newWeapon": "Nouvelle arme",
+      "newArmor": "Nouvelle armure",
+      "newItem": "Nouvel objet"
     }
   }
 }

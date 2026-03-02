@@ -12,6 +12,27 @@ export default class SpheraCharacterSheet extends ActorSheet
     {
         return `systems/sphera/templates/sheets/actors/playerCharacter-sheet.hbs`;
     }
+    
+    itemContextMenu = [
+        {
+            name: game.i18n.localize("sphera.sheet.actorFunctions.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: (element) => {
+                const item = this.actor.items.get(element.data("item-id"));
+                if (item) {
+                    item.sheet.render(true);
+                }
+            }
+        },
+        {
+            name: game.i18n.localize("sphera.sheet.actorFunctions.delete"),
+            icon: '<i class="fas fa-trash"></i>',
+            callback: (element) => {
+                let itemId = element.data("item-id");
+                this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+            }
+        }
+    ]
 
     getData(options = {}) {
         const data = super.getData(options);
@@ -25,6 +46,7 @@ export default class SpheraCharacterSheet extends ActorSheet
             actor: data.actor,
             config: CONFIG.sphera,
             weapons: data.items.filter(function(item) { return item.type === "weapon" }),
+            items: data.items,
             title: data.title
         };
         this.setAttributeBonusAsTexts(sheetData);
@@ -36,36 +58,134 @@ export default class SpheraCharacterSheet extends ActorSheet
     {
         let bonus = sheetData.system.attributes.strength.levelModifiers + sheetData.system.attributes.strength.modifiers;
         sheetData.system.attributes.strength.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.strength.text = "";
         
         bonus = sheetData.system.attributes.endurance.levelModifiers + sheetData.system.attributes.endurance.modifiers;
         sheetData.system.attributes.endurance.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.endurance.text = "";
         
         bonus = sheetData.system.attributes.speed.levelModifiers + sheetData.system.attributes.speed.modifiers;
         sheetData.system.attributes.speed.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.speed.text = "";
         
         bonus = sheetData.system.attributes.agility.levelModifiers + sheetData.system.attributes.agility.modifiers;
         sheetData.system.attributes.agility.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.agility.text = "";
         
         bonus = sheetData.system.attributes.address.levelModifiers + sheetData.system.attributes.address.modifiers;
         sheetData.system.attributes.address.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.address.text = "";
 
         bonus = sheetData.system.attributes.charisma.levelModifiers + sheetData.system.attributes.charisma.modifiers;
         sheetData.system.attributes.charisma.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.charisma.text = "";
 
         bonus = sheetData.system.attributes.perception.levelModifiers + sheetData.system.attributes.perception.modifiers;
         sheetData.system.attributes.perception.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.perception.text = "";
 
         bonus = sheetData.system.attributes.intellect.levelModifiers + sheetData.system.attributes.intellect.modifiers;
         sheetData.system.attributes.intellect.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.intellect.text = "";
         
         bonus = sheetData.system.attributes.willpower.levelModifiers + sheetData.system.attributes.willpower.modifiers;
         sheetData.system.attributes.willpower.text = (bonus >= 0 ? "+" : "") + bonus;
+        if (bonus === 0) sheetData.system.attributes.willpower.text = "";
         
         bonus = sheetData.system.attributes.magic.levelModifiers + sheetData.system.attributes.magic.modifiers;
         sheetData.system.attributes.magic.text = (bonus >= 0 ? "+" : "") + bonus;
-        
-        // for (let attribute of sheetData.system.attributes) {
-        //     attribute.text = "+0";
-        // }
+        if (bonus === 0) sheetData.system.attributes.magic.text = "";
     }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        html.find(".item-create").click((event) => {this._onItemCreate(event);});
+        html.find(".item-edit").click((event) => {this._onItemEdit(event);});
+        html.find(".item-delete").click((event) => {this._onItemDelete(event);});
+        html.find(".reserve-physical-cur").on("click contextmenu", this._onReservePhysicalCur.bind(this));
+        html.find(".reserve-physical-max").on("click contextmenu", this._onReservePhysicalMax.bind(this));
+        html.find(".reserve-mental-cur").on("click contextmenu", this._onReserveMentalCur.bind(this));
+        html.find(".reserve-mental-max").on("click contextmenu", this._onReserveMentalMax.bind(this));
+        
+        //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
+        
+        new ContextMenu(html, ".actor-item", this.itemContextMenu);
+        
+        return super.activateListeners(html);
+    }
+    
+    
+    /* Events binded functions */
+    _onItemCreate(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+
+        console.log("SPHERA | SpheraCharacterSheet::_onItemCreate called", element);
+        
+        let itemData = {
+            name: game.i18n.localize("sphera.sheet.newWeapon"),
+            type: element.dataset.type
+        };
+        console.log("SPHERA | SpheraCharacterSheet::_onItemCreate itemData: ", itemData);
+
+        return this.actor.createEmbeddedDocuments("Item", [itemData]);
+    }
+    
+    _onItemEdit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".actor-item").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+        if (item) {
+            item.sheet.render(true);
+        }
+    }
+    
+    _onItemDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".actor-item").dataset.itemId;
+        return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    }
+    
+    _onInlineEdit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+        if (item) {
+            return item.update({[event.currentTarget.name]: event.currentTarget.value});
+        }
+     }
+     
+    _onReservePhysicalCur(event) {
+        event.preventDefault();
+        console.log("SPHERA | ReservePhysicalCur", this.actor.system);
+        let currentValue = this.actor.system.reserve.physical.current;
+        let newValue;
+        if (event.type === "click")
+            newValue = Math.max(0, currentValue - 1);
+        else 
+            newValue = currentValue + 1;
+        
+        return this.actor.update({"system.reserve.physical.current": newValue});
+    }
+    _onReservePhysicalMax(event) {}
+    
+    _onReserveMentalCur(event) {
+        event.preventDefault();
+        console.log("SPHERA | ReserveMentalCur", this.actor.system);
+        let currentValue = this.actor.system.reserve.mental.current;
+        let newValue;
+        if (event.type === "click")
+            newValue = Math.max(0, currentValue - 1);
+        else 
+            newValue = currentValue + 1;
+        
+        return this.actor.update({"system.reserve.mental.current": newValue});
+    }
+    
+    _onReserveMentalMax(event) {}
+    
 }

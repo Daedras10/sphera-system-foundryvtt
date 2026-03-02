@@ -19,8 +19,8 @@
                 </tr>
                 <tr>
                     <th rowspan="2">{{localize 'sphera.characteristics.reserve.physical'}}</th>
-                    <td rowspan="2">{{ system.reserve.physical.current }}</td>
-                    <td rowspan="2">/{{ system.reserve.physical.max }}</td>
+                    <td class="reserve-physical-cur" rowspan="2">{{ system.reserve.physical.current }}</td>
+                    <td class="reserve-physical-max" rowspan="2">/{{ system.reserve.physical.max }}</td>
                     <td rowspan="2">{{ system.reserve.mental.malus }}</td>
                     
                     <th>Force</th>
@@ -38,8 +38,8 @@
                 </tr>
                 <tr>
                     <th rowspan="2">{{localize 'sphera.characteristics.reserve.mental'}}</th>
-                    <td rowspan="2">{{ system.reserve.mental.current }}</td>
-                    <td rowspan="2">/{{ system.reserve.mental.max }}</td>
+                    <td class="reserve-mental-cur" rowspan="2">{{ system.reserve.mental.current }}</td>
+                    <td class="reserve-mental-max" rowspan="2">/{{ system.reserve.mental.max }}</td>
                     <td rowspan="2">{{ system.reserve.mental.malus }}</td>
 
                     <th>Charisme</th>
@@ -77,10 +77,15 @@
 
 
     <section class="items">
-        <h3 class="noborder">Owned Items rire</h3>
+        <h3 class="noborder">
+            Owned Items rire
+            <a class="item-create" data-type="weapon" title="{{ localize "sphera.sheet.actorFunctions.addItem" }}">
+                <i class="fa fa-plus"></i>
+            </a>
+        </h3>
         <ol class="actor-items">
             {{#each actor.items as |item id|}}
-                <li class="actor-item" data-item-id="{{id}}">
+                <li class="actor-item" data-item-id="{{item._id}}">
                     <div class="item-name">
                         <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
                         <h4>{{item.name}}</h4>
