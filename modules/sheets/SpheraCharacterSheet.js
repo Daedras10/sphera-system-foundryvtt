@@ -1,3 +1,5 @@
+import * as Dice from '../dice/dice.js';
+
 export default class SpheraCharacterSheet extends ActorSheet
 {
     static get defaultOptions()
@@ -108,6 +110,10 @@ export default class SpheraCharacterSheet extends ActorSheet
         html.find(".reserve-mental-cur").on("click contextmenu", this._onReserveMentalCur.bind(this));
         html.find(".reserve-mental-max").on("click contextmenu", this._onReserveMentalMax.bind(this));
         
+        if (this.actor.isOwner) {
+            html.find(".test-roll").click((event) => {this._onTestRoll(event);});
+        }
+        
         //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
         
         new ContextMenu(html, ".actor-item", this.itemContextMenu);
@@ -187,5 +193,39 @@ export default class SpheraCharacterSheet extends ActorSheet
     }
     
     _onReserveMentalMax(event) {}
+
+    async _onTestRoll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log("SPHERA | Test roll clicked");
+        
+        /*
+        let chatData = {
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        }
+
+        //chatData.content = await renderTemplate(this.chatTemplate[this.type], cardData);
+        chatData.roll = true;
+        
+        let roll = new Roll("1d20");
+        roll.roll({async: false});
+        roll.toMessage(chatData);
+        
+        return ChatMessage.create(chatData);
+        */
+        
+        let rollFormula = "5d10kh3 + @bonus";
+        let rollData = {
+            bonus: 2
+        }
+        let messageData = {
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({actor: this.actor})
+        }
+
+        let roll = await new Roll(rollFormula, rollData).roll();
+        roll.toMessage(messageData);
+    }
     
 }
