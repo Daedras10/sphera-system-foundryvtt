@@ -39,7 +39,15 @@
         "edit": "Éditer",
         "delete": "Supprimer"
       },
-
+      "reserve": {
+        "current": "Nombre de réserves actuelles",
+        "max": "Nombre de réserves maximum",
+        "bonus": "Modificateur de réserve maximum"
+      },
+      "levelModifiers": "Bonus de niveau",
+      "modifiers": "Bonus de caractéristique",
+      "dices": "Nombre de dés",
+      
       "newWeapon": "Nouvelle arme",
       "newArmor": "Nouvelle armure",
       "newItem": "Nouvel objet"

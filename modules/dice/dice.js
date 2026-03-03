@@ -40,6 +40,8 @@ export async function AttributeSkillCheck(info, actorInfo) {
     let attributeLevelBonus = 0;
     
     let otherBonuses = 0;
+    let reserveMalus = 0;
+    let isPhysical = ["strength", "endurance", "speed", "agility"].includes(info.attribute);
     
     if (info.useDialog)
     {
@@ -115,6 +117,13 @@ export async function AttributeSkillCheck(info, actorInfo) {
             return;
     }
     
+    
+    let reserveMax = getMaxReserves(actorInfo, isPhysical);
+    let currentReserve = isPhysical ? actorInfo.reserve.physical.current : actorInfo.reserve.mental.current;
+    reserveMalus = currentReserve - (reserveMax * 0.5);
+    reserveMalus = Math.floor(reserveMalus);
+    
+    
     let totalDices = (attributeDices + superiority - inferiority) - 3;
     let dicesToRoll = 3;
     let keepType = "kh3";
@@ -126,7 +135,7 @@ export async function AttributeSkillCheck(info, actorInfo) {
         keepType = "kl3";
     }
     
-    let rollFormula = `${dicesToRoll}d10${keepType} + ${attributeBonus} + ${attributeLevelBonus} + ${otherBonuses}`;
+    let rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${otherBonuses} + ${reserveMalus}`;
     let rollData = {}
     let messageData = {
         user: game.user._id,
@@ -172,4 +181,38 @@ function _processSkillCheckOptions(form) {
         useReserve: form.useReserve.checked,
         reserveToUse: parseInt(form.reserveToUse.value),
     }
+}
+
+
+function getMaxReserves(actorInfo, isPhysical) 
+{
+    let Max = 0;
+    if (isPhysical)
+    {
+        Max = actorInfo.reserve.physical.max;
+        if (actorInfo.reserve.physical.maxOverride === false)
+        {
+            Max = actorInfo.attributes.strength.dices +
+                actorInfo.attributes.endurance.dices +
+                actorInfo.attributes.speed.dices +
+                actorInfo.attributes.agility.dices +
+                actorInfo.attributes.address.dices;
+        }
+        
+        Max += actorInfo.reserve.physical.bonus;
+        return Max;
+    }
+    
+    Max = actorInfo.reserve.mental.max;
+    if (actorInfo.reserve.mental.maxOverride === false)
+    {
+        Max = actorInfo.attributes.charisma.dices +
+            actorInfo.attributes.perception.dices +
+            actorInfo.attributes.intellect.dices +
+            actorInfo.attributes.willpower.dices +
+            actorInfo.attributes.magic.dices;
+    }
+    
+    Max += actorInfo.reserve.mental.bonus;
+    return Max;
 }

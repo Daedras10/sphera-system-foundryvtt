@@ -93,11 +93,15 @@
           "physical": {
             "current": 0,
             "max": 0,
+            "maxOverride": false,
+            "bonus": 0,
             "malus": ""
           },
           "mental": {
             "current": 0,
             "max": 0,
+            "maxOverride": false,
+            "bonus": 0,
             "malus": ""
           }
         }

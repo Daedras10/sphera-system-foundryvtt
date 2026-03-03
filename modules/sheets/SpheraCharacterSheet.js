@@ -36,6 +36,19 @@ export default class SpheraCharacterSheet extends ActorSheet
             }
         }
     ]
+    
+    attributeContextMenu = [
+        {
+            name: game.i18n.localize("sphera.sheet.actorFunctions.edit"),
+            icon: '<i class="fas fa-edit"></i>',
+            callback: (element) => {
+                let attribute = element.data("attribute");
+                console.log("SPHERA | Edit attribute", attribute);
+            }
+        }
+    ]
+                
+                
 
     getData(options = {}) {
         const data = super.getData(options);
@@ -53,6 +66,8 @@ export default class SpheraCharacterSheet extends ActorSheet
             title: data.title
         };
         this.setAttributeBonusAsTexts(sheetData);
+        this.updateMaxReserveValues(sheetData);
+        
         console.log("SPHERA | Item Character Data", sheetData);
         return sheetData;
     }
@@ -99,6 +114,58 @@ export default class SpheraCharacterSheet extends ActorSheet
         sheetData.system.attributes.magic.text = (bonus >= 0 ? "+" : "") + bonus;
         if (bonus === 0) sheetData.system.attributes.magic.text = "";
     }
+    
+    updateMaxReserveValues(sheetData = {}) {
+        if (sheetData.system.reserve.physical.maxOverride === false)
+        {
+            let totalDicesPhysical = sheetData.system.attributes.strength.dices +
+                sheetData.system.attributes.endurance.dices +
+                sheetData.system.attributes.speed.dices +
+                sheetData.system.attributes.agility.dices +
+                sheetData.system.attributes.address.dices;
+            
+            sheetData.system.reserve.physical.max = totalDicesPhysical;
+            this.actor.system.reserve.physical.max = totalDicesPhysical;
+        }
+        
+        if (sheetData.system.reserve.mental.maxOverride === false)
+        {
+            let totalDicesMental = sheetData.system.attributes.charisma.dices +
+                sheetData.system.attributes.perception.dices +
+                sheetData.system.attributes.intellect.dices +
+                sheetData.system.attributes.willpower.dices +
+                sheetData.system.attributes.magic.dices;
+            
+            sheetData.system.reserve.mental.max = totalDicesMental;
+            this.actor.system.reserve.mental.max = totalDicesMental;
+        }
+
+        sheetData.system.reserve.physical.maxDisplayed = sheetData.system.reserve.physical.max + sheetData.system.reserve.physical.bonus;
+        this.actor.system.reserve.physical.maxDisplayed = sheetData.system.reserve.physical.max + sheetData.system.reserve.physical.bonus;
+        
+        sheetData.system.reserve.mental.maxDisplayed = sheetData.system.reserve.mental.max + sheetData.system.reserve.mental.bonus;
+        this.actor.system.reserve.mental.maxDisplayed = sheetData.system.reserve.mental.max + sheetData.system.reserve.mental.bonus;
+
+        let physicalMalus = sheetData.system.reserve.physical.current - (sheetData.system.reserve.physical.maxDisplayed * 0.5);
+        if (physicalMalus > 0) physicalMalus = 0;
+        physicalMalus = Math.floor(physicalMalus);
+        
+        let mentalMalus = sheetData.system.reserve.mental.current - (sheetData.system.reserve.mental.maxDisplayed * 0.5);
+        if (mentalMalus > 0) mentalMalus = 0;
+        mentalMalus = Math.floor(mentalMalus);
+        
+        console.log("SPHERA | Physical malus: ", physicalMalus);
+        console.log("SPHERA | Mental malus: ", mentalMalus);
+
+        sheetData.system.reserve.physical.malus = physicalMalus;
+        sheetData.system.reserve.mental.malus = mentalMalus;
+
+        this.actor.system.reserve.physical.malus = physicalMalus;
+        this.actor.system.reserve.mental.malus = mentalMalus;
+        
+        
+        //sheetData.system.reserve.physical.malus =
+    }
 
     activateListeners(html) {
         super.activateListeners(html);
@@ -119,6 +186,7 @@ export default class SpheraCharacterSheet extends ActorSheet
         //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
         
         new ContextMenu(html, ".actor-item", this.itemContextMenu);
+        new ContextMenu(html, ".attribute-info", this.attributeContextMenu);
         
         return super.activateListeners(html);
     }
@@ -168,7 +236,9 @@ export default class SpheraCharacterSheet extends ActorSheet
      }
      
     _onReservePhysicalCur(event) {
+        if (this.actor.system.sheetActions.isEditMode) return;
         event.preventDefault();
+        
         console.log("SPHERA | ReservePhysicalCur", this.actor.system);
         let currentValue = this.actor.system.reserve.physical.current;
         let newValue;
@@ -182,6 +252,7 @@ export default class SpheraCharacterSheet extends ActorSheet
     _onReservePhysicalMax(event) {}
     
     _onReserveMentalCur(event) {
+        if (this.actor.system.sheetActions.isEditMode) return;
         event.preventDefault();
         console.log("SPHERA | ReserveMentalCur", this.actor.system);
         let currentValue = this.actor.system.reserve.mental.current;
@@ -230,7 +301,7 @@ export default class SpheraCharacterSheet extends ActorSheet
         
         let roll = await new Roll(rollFormula, rollData).roll();
         roll.toMessage(messageData);
-    }
+    } //TODO: remove this, only for testing purposes
     
     async _onRollAttribute(event) {
         event.preventDefault();

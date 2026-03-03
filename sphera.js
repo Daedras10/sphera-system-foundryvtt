@@ -39,6 +39,7 @@ async function preloadHandlebarsTemplates() {
 
 function registerHandelbarsHelpers() {
     Handlebars.registerHelper("equals", function(v1, v2) { return (v1 === v2)});
+    Handlebars.registerHelper("notEquals", function(v1, v2) { return (v1 !== v2)});
     Handlebars.registerHelper("contains", function(element, search) { return (element.includes(search))});
     Handlebars.registerHelper("concat", function(s1, s2, s3 = "") { return s1 + s2 + s3;});
     Handlebars.registerHelper("isGreater", function(p1, p2) { return (p1 > p2)});

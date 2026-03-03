@@ -18,11 +18,37 @@
                     <th colspan="5">{{localize 'sphera.characteristics.title'}}</th>
                 </tr>
                 <tr>
-                    <th rowspan="2">{{localize 'sphera.characteristics.reserve.physical'}}</th>
-                    <td class="reserve-physical-cur" rowspan="2">{{ system.reserve.physical.current }}</td>
-                    <td class="reserve-physical-max" rowspan="2">/{{ system.reserve.physical.max }}</td>
-                    <td rowspan="2">{{ system.reserve.mental.malus }}</td>
-                    
+                    <th rowspan="2">
+                        {{#if system.sheetActions.isEditMode }}
+                            <input type="checkbox" name="system.reserve.physical.maxOverride" {{#if system.reserve.physical.maxOverride}}checked{{/if}}/>
+                        {{/if }}
+                        {{localize 'sphera.characteristics.reserve.physical'}}
+                    </th>
+                    <td class="reserve-physical-cur" rowspan="2">
+                        {{#if system.sheetActions.isEditMode }}
+                            <input name="system.reserve.physical.current" data-tooltip="{{ localize "sphera.sheet.reserve.current" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.physical.current}}" placeholder="10"/>
+                        {{else}}
+                            {{ system.reserve.physical.current }}
+                        {{/if }}
+                        
+                    </td>
+                    <td class="reserve-physical-max" rowspan="2">/
+                        {{#if system.sheetActions.isEditMode }}
+                            <input name="system.reserve.physical.max" data-tooltip="{{ localize "sphera.sheet.reserve.max" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.physical.max}}" placeholder="10" {{#unless system.reserve.physical.maxOverride}}disabled="disabled"{{/unless}} />
+                            <input name="system.reserve.physical.bonus" data-tooltip="{{ localize "sphera.sheet.reserve.bonus" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.physical.bonus}}" placeholder="0"/>
+                        {{else}}
+                            {{ system.reserve.physical.maxDisplayed }}
+                        {{/if }}
+                    </td>
+                    <td rowspan="2">
+                        {{#if (notEquals system.reserve.physical.malus 0) }}
+                            {{#if (isGreater system.reserve.physical.malus 0) }}
+                                +{{ system.reserve.physical.malus }}
+                            {{else}}
+                            {{ system.reserve.physical.malus }}
+                            {{/if}}
+                        {{/if}}
+                    </td>
                     <th><a class="roll-attribute" data-attribute="strength">{{ localize 'sphera.characteristics.attributes.strength' }}</a></th>
                     <th><a class="roll-attribute" data-attribute="endurance">{{ localize 'sphera.characteristics.attributes.endurance' }}</a></th>
                     <th><a class="roll-attribute" data-attribute="speed">{{ localize 'sphera.characteristics.attributes.speed' }}</a></th>
@@ -30,17 +56,88 @@
                     <th><a class="roll-attribute" data-attribute="address">{{ localize 'sphera.characteristics.attributes.address' }}</a></th>
                 </tr>
                 <tr>
-                    <td>{{ system.attributes.strength.dices }}D10{{ system.attributes.strength.text }}</td>
-                    <td>{{ system.attributes.endurance.dices }}D10{{ system.attributes.endurance.text }}</td>
-                    <td>{{ system.attributes.speed.dices }}D10{{ system.attributes.speed.text }}</td>
-                    <td>{{ system.attributes.agility.dices }}D10{{ system.attributes.agility.text }}</td>
-                    <td>{{ system.attributes.address.dices }}D10{{ system.attributes.address.text }}</td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.strength.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.strength.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.strength.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.strength.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.strength.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.strength.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.strength.dices }}D10{{ system.attributes.strength.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.endurance.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.endurance.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.endurance.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.endurance.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.endurance.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.endurance.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.endurance.dices }}D10{{ system.attributes.endurance.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.speed.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.speed.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.speed.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.speed.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.speed.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.speed.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.speed.dices }}D10{{ system.attributes.speed.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.agility.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.agility.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.agility.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.agility.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.agility.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.agility.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.agility.dices }}D10{{ system.attributes.agility.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.address.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.address.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.address.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.address.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.address.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.address.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.address.dices }}D10{{ system.attributes.address.text }}
+                    {{/if}}
+                    </td>
                 </tr>
                 <tr>
-                    <th rowspan="2">{{localize 'sphera.characteristics.reserve.mental'}}</th>
-                    <td class="reserve-mental-cur" rowspan="2">{{ system.reserve.mental.current }}</td>
-                    <td class="reserve-mental-max" rowspan="2">/{{ system.reserve.mental.max }}</td>
-                    <td rowspan="2">{{ system.reserve.mental.malus }}</td>
+                    <th rowspan="2">
+                        {{#if system.sheetActions.isEditMode }}
+                            <input type="checkbox" name="system.reserve.mental.maxOverride" {{#if system.reserve.mental.maxOverride}}checked{{/if}}/>
+                        {{/if }}
+                        {{localize 'sphera.characteristics.reserve.mental'}}
+                    </th>
+                    <td class="reserve-mental-cur" rowspan="2">
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.reserve.mental.current" data-tooltip="{{ localize "sphera.sheet.reserve.current" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.mental.current}}" placeholder="10"/>
+                    {{else}}
+                        {{ system.reserve.mental.current }}
+                    {{/if }}
+                    </td>
+                    <td class="reserve-mental-max" rowspan="2">/
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.reserve.mental.max" data-tooltip="{{ localize "sphera.sheet.reserve.max" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.mental.max}}" placeholder="10" {{#unless system.reserve.mental.maxOverride}}disabled="disabled"{{/unless}} />
+                        <input name="system.reserve.mental.bonus" data-tooltip="{{ localize "sphera.sheet.reserve.bonus" }}" type="number" style="width: 25px; text-align: center;" value="{{system.reserve.mental.bonus}}" placeholder="0"/>
+                    {{else}}
+                        {{ system.reserve.mental.maxDisplayed }}
+                    {{/if }}
+                    </td>
+                    <td rowspan="2">
+                    {{#if (notEquals system.reserve.mental.malus 0) }}
+                        {{#if (isGreater system.reserve.mental.malus 0) }}
+                            +{{ system.reserve.mental.malus }}
+                        {{else}}
+                        {{ system.reserve.mental.malus }}
+                        {{/if}}
+                    {{/if}}
+                    </td>
 
                     <th><a class="roll-attribute" data-attribute="charisma">{{ localize 'sphera.characteristics.attributes.charisma' }}</a></th>
                     <th><a class="roll-attribute" data-attribute="perception">{{ localize 'sphera.characteristics.attributes.perception' }}</a></th>
@@ -49,11 +146,56 @@
                     <th><a class="roll-attribute" data-attribute="magic">{{ localize 'sphera.characteristics.attributes.magic' }}</a></th>
                 </tr>
                 <tr>
-                    <td>{{ system.attributes.charisma.dices }}D10{{ system.attributes.charisma.text }}</td>
-                    <td>{{ system.attributes.perception.dices }}D10{{ system.attributes.perception.text }}</td>
-                    <td>{{ system.attributes.intellect.dices }}D10{{ system.attributes.intellect.text }}</td>
-                    <td>{{ system.attributes.willpower.dices }}D10{{ system.attributes.willpower.text }}</td>
-                    <td>{{ system.attributes.magic.dices }}D10{{ system.attributes.magic.text }}</td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.charisma.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.charisma.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.charisma.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.charisma.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.charisma.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.charisma.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.charisma.dices }}D10{{ system.attributes.charisma.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.perception.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.perception.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.perception.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.perception.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.perception.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.perception.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.perception.dices }}D10{{ system.attributes.perception.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.intellect.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.intellect.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.intellect.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.intellect.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.intellect.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.intellect.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.intellect.dices }}D10{{ system.attributes.intellect.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.willpower.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.willpower.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.willpower.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.willpower.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.willpower.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.willpower.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.willpower.dices }}D10{{ system.attributes.willpower.text }}
+                    {{/if}}
+                    </td>
+                    <td>
+                    {{#if system.sheetActions.isEditMode }}
+                        <input name="system.attributes.magic.dices" data-tooltip="{{ localize "sphera.sheet.dices" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.magic.dices}}" placeholder="3"/>
+                        D10 
+                        <input name="system.attributes.magic.levelModifiers" data-tooltip="{{ localize "sphera.sheet.levelModifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.magic.levelModifiers}}" placeholder="+0"/>
+                        <input name="system.attributes.magic.modifiers" data-tooltip="{{ localize "sphera.sheet.modifiers" }}" type="number" style="width: 25px; text-align: center;" value="{{system.attributes.magic.modifiers}}" placeholder="+0"/>
+                    {{else}}
+                        {{ system.attributes.magic.dices }}D10{{ system.attributes.magic.text }}
+                    {{/if}}
+                    </td>
                 </tr>
             </table>
         </div>
@@ -62,13 +204,12 @@
     {{!-- Owned Items Tab --}}
     <div class="tab items active" data-group="primary" data-tab="items">
         <h1>Tab2</h1>
-        {{numberInput system.attributes.strength.dices name="system.attributes.strength.dices"}}
         <input type="checkbox" name="system.sheetActions.isEditMode" {{#if system.sheetActions.isEditMode}}checked{{/if}}/>
-
         {{#if system.sheetActions.isEditMode }}
         <h1>EditMode</h1>
         {{else}}
             <h1>Not EditMode</h1>
+            {{numberInput system.attributes.strength.dices name="system.attributes.strength.dices"}}
         {{/if}}
         <a class="test-roll"><i class="fa fa-dice"></i></a>
     </div>
