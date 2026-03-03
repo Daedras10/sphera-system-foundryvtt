@@ -23,18 +23,18 @@
                     <td class="reserve-physical-max" rowspan="2">/{{ system.reserve.physical.max }}</td>
                     <td rowspan="2">{{ system.reserve.mental.malus }}</td>
                     
-                    <th>Force</th>
-                    <th>Endurance</th>
-                    <th>Vitesse</th>
-                    <th>Agilité</th>
-                    <th>Adresse</th>
+                    <th><a class="roll-attribute" data-attribute="strength">{{ localize 'sphera.characteristics.attributes.strength' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="endurance">{{ localize 'sphera.characteristics.attributes.endurance' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="speed">{{ localize 'sphera.characteristics.attributes.speed' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="agility">{{ localize 'sphera.characteristics.attributes.agility' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="address">{{ localize 'sphera.characteristics.attributes.address' }}</a></th>
                 </tr>
                 <tr>
                     <td>{{ system.attributes.strength.dices }}D10{{ system.attributes.strength.text }}</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
+                    <td>{{ system.attributes.endurance.dices }}D10{{ system.attributes.endurance.text }}</td>
+                    <td>{{ system.attributes.speed.dices }}D10{{ system.attributes.speed.text }}</td>
+                    <td>{{ system.attributes.agility.dices }}D10{{ system.attributes.agility.text }}</td>
+                    <td>{{ system.attributes.address.dices }}D10{{ system.attributes.address.text }}</td>
                 </tr>
                 <tr>
                     <th rowspan="2">{{localize 'sphera.characteristics.reserve.mental'}}</th>
@@ -42,18 +42,18 @@
                     <td class="reserve-mental-max" rowspan="2">/{{ system.reserve.mental.max }}</td>
                     <td rowspan="2">{{ system.reserve.mental.malus }}</td>
 
-                    <th>Charisme</th>
-                    <th>Perception</th>
-                    <th>Intelligence</th>
-                    <th>Volonté</th>
-                    <th>Magie</th>
+                    <th><a class="roll-attribute" data-attribute="charisma">{{ localize 'sphera.characteristics.attributes.charisma' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="perception">{{ localize 'sphera.characteristics.attributes.perception' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="intellect">{{ localize 'sphera.characteristics.attributes.intellect' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="willpower">{{ localize 'sphera.characteristics.attributes.willpower' }}</a></th>
+                    <th><a class="roll-attribute" data-attribute="magic">{{ localize 'sphera.characteristics.attributes.magic' }}</a></th>
                 </tr>
                 <tr>
-                    <td>2D10</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
-                    <td>2D10</td>
+                    <td>{{ system.attributes.charisma.dices }}D10{{ system.attributes.charisma.text }}</td>
+                    <td>{{ system.attributes.perception.dices }}D10{{ system.attributes.perception.text }}</td>
+                    <td>{{ system.attributes.intellect.dices }}D10{{ system.attributes.intellect.text }}</td>
+                    <td>{{ system.attributes.willpower.dices }}D10{{ system.attributes.willpower.text }}</td>
+                    <td>{{ system.attributes.magic.dices }}D10{{ system.attributes.magic.text }}</td>
                 </tr>
             </table>
         </div>

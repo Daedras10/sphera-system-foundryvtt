@@ -1,4 +1,5 @@
 import * as Dice from '../dice/dice.js';
+import {AttributeSkillCheck} from "../dice/dice.js";
 
 export default class SpheraCharacterSheet extends ActorSheet
 {
@@ -112,6 +113,7 @@ export default class SpheraCharacterSheet extends ActorSheet
         
         if (this.actor.isOwner) {
             html.find(".test-roll").click((event) => {this._onTestRoll(event);});
+            html.find(".roll-attribute").click((event) => {this._onRollAttribute(event);});
         }
         
         //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
@@ -223,9 +225,25 @@ export default class SpheraCharacterSheet extends ActorSheet
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({actor: this.actor})
         }
-
+        
+        let checkOptions = await Dice.GetSkillCheckOptions("strength");
+        
         let roll = await new Roll(rollFormula, rollData).roll();
         roll.toMessage(messageData);
+    }
+    
+    async _onRollAttribute(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let attribute = element.dataset.attribute;
+        console.log("SPHERA | Roll attribute clicked", attribute);
+        
+        let info = {
+            attribute: attribute,
+            useDialog: true
+        }
+        
+        return await Dice.AttributeSkillCheck(info, this.actor.system);
     }
     
 }

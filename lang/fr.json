@@ -43,6 +43,19 @@
       "newWeapon": "Nouvelle arme",
       "newArmor": "Nouvelle armure",
       "newItem": "Nouvel objet"
+    },
+    "dialog": {
+      "skillCheck": {
+        "title": "Jet de compétence",
+        "roll": "Lancer le jet",
+        "cancel": "Annuler",
+        "skillBonus": "Bonus au jet",
+        "superiority": "Supériorité",
+        "inferiority": "Infériorité",
+        "difficulty": "Diffulté du jet",
+        "useReserve": "Utiliser des réserves ?",
+        "reserveToUse": "Nombre de réserves à utiliser"
+      }
     }
   }
 }

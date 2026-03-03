@@ -1,4 +1,5 @@
 import { sphera } from "./modules/config.js";
+import * as Chat from "./modules/chat.js";
 import SpheraItemSheet from "./modules/sheets/SpheraItemSheet.js";
 import SpheraCharacterSheet from "./modules/sheets/SpheraCharacterSheet.js";
 
@@ -14,6 +15,8 @@ Hooks.once("init", async () => {
     preloadHandlebarsTemplates();
     registerHandelbarsHelpers();
 });
+
+Hooks.on("renderChatLog", async (app, html, data) => {Chat.addChatListeners(html)});
 
 
 function registerItemSheets() {
