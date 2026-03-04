@@ -43,21 +43,6 @@ export async function AttributeSkillCheck(info, actorInfo) {
     let reserveMalus = 0;
     let isPhysical = ["strength", "endurance", "speed", "agility"].includes(info.attribute);
     
-    if (info.useDialog)
-    {
-        let checkOptions = await GetSkillCheckOptions(info.attribute);
-        console.log(checkOptions);
-        
-        if (checkOptions.cancelled) {
-            console.log("Skill check cancelled");
-            return;
-        }
-
-        superiority = checkOptions.superiority;
-        inferiority = checkOptions.inferiority;
-        otherBonuses = checkOptions.skillBonus;
-        //otherBonuses = checkOptions.useReserve ? checkOptions.reserveToUse : 0;
-    }
     console.log("Attribute skillCheck, Info:", info);
     console.log("Attribute skillCheck, actorInfo:", actorInfo);
     
@@ -117,11 +102,12 @@ export async function AttributeSkillCheck(info, actorInfo) {
             return;
     }
     
-    
     let reserveMax = getMaxReserves(actorInfo, isPhysical);
     let currentReserve = isPhysical ? actorInfo.reserve.physical.current : actorInfo.reserve.mental.current;
     reserveMalus = currentReserve - (reserveMax * 0.5);
+    if (reserveMalus > 0) reserveMalus = 0;
     reserveMalus = Math.floor(reserveMalus);
+    console.log("Reserve malus calculated:", reserveMalus, "Current reserve:", currentReserve, "Reserve max:", reserveMax);
     
     
     let totalDices = (attributeDices + superiority - inferiority) - 3;
@@ -135,7 +121,50 @@ export async function AttributeSkillCheck(info, actorInfo) {
         keepType = "kl3";
     }
     
-    let rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${otherBonuses} + ${reserveMalus}`;
+    let rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${reserveMalus}`;
+
+    let currentRollInfo = {
+        formula: rollFormula,
+        attribute: game.i18n.localize("sphera.characteristics.attributes." + info.attribute),
+        dicesToRoll: dicesToRoll,
+        keepType: keepType,
+        attributeDices: attributeDices,
+        attributeLevelBonus: attributeLevelBonus,
+        attributeBonus: attributeBonus,
+        reserveMalus: reserveMalus,
+        superiority: superiority,
+        inferiority: inferiority,
+    };
+
+    if (info.useDialog)
+    {
+        let checkOptions = await GetSkillCheckOptions(info.attribute, currentRollInfo);
+        console.log(checkOptions);
+
+        if (checkOptions.cancelled) {
+            console.log("Skill check cancelled");
+            return;
+        }
+
+        superiority = checkOptions.superiority;
+        inferiority = checkOptions.inferiority;
+        otherBonuses = checkOptions.skillBonus;
+        //otherBonuses = checkOptions.useReserve ? checkOptions.reserveToUse : 0;
+
+        totalDices = (attributeDices + superiority - inferiority) - 3;
+        dicesToRoll = 3;
+        keepType = "kh3";
+        if (totalDices >= 0) {
+            dicesToRoll = totalDices + 3;
+            keepType = "kh3";
+        } else {
+            dicesToRoll = (totalDices * -1) + 3;
+            keepType = "kl3";
+        }
+        
+        rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${otherBonuses} + ${reserveMalus}`;
+    }
+    
     let rollData = {}
     let messageData = {
         user: game.user._id,
@@ -146,9 +175,14 @@ export async function AttributeSkillCheck(info, actorInfo) {
     await roll.toMessage(messageData);
 }
 
-export async function GetSkillCheckOptions(skillType) {
+export async function SkillCheck(info, actorInfo) {
+    // Similar to AttributeSkillCheck but with more customizable options, like choosing the attribute dices to use, or adding flat bonuses.
+    // The info object should contain all the necessary information to build the roll formula, and the dialog should allow the player to modify it before rolling.
+    // TODO
+}
+export async function GetSkillCheckOptions(skillType, currentRollInfo) {
     const template = "systems/sphera/templates/dialog/skill-check-dialog.hbs";
-    const html = await renderTemplate(template, {});
+    const html = await renderTemplate(template, {currentRollInfo});
     
     return new Promise(resolve => {
         const data = {
@@ -182,7 +216,6 @@ function _processSkillCheckOptions(form) {
         reserveToUse: parseInt(form.reserveToUse.value),
     }
 }
-
 
 function getMaxReserves(actorInfo, isPhysical) 
 {

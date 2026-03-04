@@ -33,6 +33,72 @@
         "title": "Réserves"
       }
     },
+    "skills": {
+      "type": {
+        "combat": "Combat",
+        "craft": "Artisanat",
+        "social": "Social",
+        "magic": "Magie"
+      },
+      "list": {
+        "melee": "Combat rapproché",
+        "meleePrestess": "Prestesse",
+        "meleeChoc": "Choc",
+        "meleeTactic": "Tactique",
+        "meleeMartial": "Martial",
+        "ranged": "Combat à distance",
+        "rangedMechanical": "Armes mécaniques",
+        "elimination": "Élimination",
+        "armor": "Port d'armure",
+        "stealth": "Furtivité",
+        "dodge": "Esquive",
+        "athletics": "Athlétisme",
+        "parry": "Parade",
+        "equitation": "Équitation",
+        
+        "craftsman": "Artisanat",
+        "craftsmanArmory": "Armurerie",
+        "craftsmanEngineering": "Ingénierie",
+        "craftsmanGoldsmith": "Orfevrerie",
+        "arcana": "Arcanes",
+        "arcanaAlchemy": "Alchimie",
+        "arcanaEnchanting": "Enchantement",
+        "arcanaArtificing": "Artifices",
+        "wildcraft": "En plein air",
+        "wildcraftCamping": "Campement",
+        "wildcraftHunting": "Chasse",
+        "wildcraftExploration": "Exploration",
+        
+        "coordination": "Coordination",
+        "navigation": "Navigation",
+        "strategy": "Stratégie",
+        "trading": "Marchandage",
+        "rapine": "Rapine",
+        "barman": "Pilier de bar",
+        "seduction": "Séduction",
+        "superstition": "Superstition",
+        "aristocracy": "Aristocratie",
+        "erudition": "Erudition",
+        "authority": "Autorité",
+        "streetwise": "Bas-fonds",
+        
+        "generalMagic": "Magie généraliste",
+        "warMagic": "Magie de guerre",
+        "guardMagic": "Magie de garde",
+        "insaneMagic": "Folle magie",
+        "blackMagic": "Magie noire",
+        "chronomancy": "Chronomancie",
+        "beautifulMagic": "Belle magie",
+        "demonology": "Démonisme",
+        "witchcraft": "Sorcellerie",
+        "thaumaturgy": "Thaumaturgie",
+        "astralMagic": "Magie astrale",
+        "geomancy": "Géomancie",
+        "transmutation": "Transmutation",
+        "manamancy": "Manamancie",
+        "prestidigitation": "Prestidigitation"
+      }
+    },
     "sheet": {
       "actorFunctions": {
         "addItem": "Ajouter un objet",
@@ -62,7 +128,14 @@
         "inferiority": "Infériorité",
         "difficulty": "Diffulté du jet",
         "useReserve": "Utiliser des réserves ?",
-        "reserveToUse": "Nombre de réserves à utiliser"
+        "reserveToUse": "Nombre de réserves à utiliser",
+        "currentRoll": "Jet actuel",
+        "reserveMalus": "Malus due aux réserves",
+        "attributeBonus": "Bonus de caractéristique",
+        "attributeLevelBonus": "Bonus due aux niveaux",
+        "attributeDices": "Dés de caractéristique",
+        "attributeUsed": "Caractéristique utilisée"
+        
       }
     }
   }

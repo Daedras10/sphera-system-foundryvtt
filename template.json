@@ -107,10 +107,387 @@
         }
       },
       "baseSkills": {
-        "combatSkills": [],
-        "craftSkills": [],
-        "socialSkills": [],
-        "magicSkills": []
+        "skills": {
+          "combatSkills": {
+            "melee": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "meleePrestess": {
+              "level": 0,
+              "owned": false,
+              "parent": "melee",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "meleeChoc": {
+              "level": 0,
+              "owned": false,
+              "parent": "melee",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "meleeTactic": {
+              "level": 0,
+              "owned": false,
+              "parent": "melee",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "meleeMartial": {
+              "level": 0,
+              "owned": false,
+              "parent": "melee",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "ranged": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "rangedMechanical": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "elimination": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "armor": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "stealth": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "dodge": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "athletics": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "parry": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "equitation": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            }
+          },
+          "craftSkills": {
+            "craftsman": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "craftsmanArmory": {
+              "level": 0,
+              "owned": false,
+              "parent": "craftsman",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "craftsmanEngineering": {
+              "level": 0,
+              "owned": false,
+              "parent": "craftsman",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "craftsmanGoldsmith": {
+              "level": 0,
+              "owned": false,
+              "parent": "craftsman",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "arcana": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "arcanaAlchemy": {
+              "level": 0,
+              "owned": false,
+              "parent": "arcana",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "arcanaEnchanting": {
+              "level": 0,
+              "owned": false,
+              "parent": "arcana",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "arcanaArtificing": {
+              "level": 0,
+              "owned": false,
+              "parent": "arcana",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "wildcraft": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "wildcraftCamping": {
+              "level": 0,
+              "owned": false,
+              "parent": "wildcraft",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "wildcraftHunting": {
+              "level": 0,
+              "owned": false,
+              "parent": "wildcraft",
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "wildcraftExploration": {
+              "level": 0,
+              "owned": false,
+              "parent": "wildcraft",
+              "levelModifiers": 0,
+              "modifiers": 0
+            }
+          },
+          "socialSkills": {
+            "coordination": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "navigation": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "strategy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "trading": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "rapine": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "barman": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "seduction": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "superstition": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "aristocracy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "erudition": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "authority": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "streetwise": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            }
+          },
+          "magicSkills": {
+            "generalMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "warMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "guardMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "insaneMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "blackMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "chronomancy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "beautifulMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "demonology": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "witchcraft": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "thaumaturgy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "astralMagic": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "geomancy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "transmutation": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "manamancy": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            },
+            "prestidigitation": {
+              "level": 0,
+              "owned": false,
+              "parent": null,
+              "levelModifiers": 0,
+              "modifiers": 0
+            }
+          }
+        }
       },
       "baseActions": {
         "offensive": 1,
@@ -118,14 +495,16 @@
         "movement": 1,
         "broutiles": 0,
         "discussion": 0
+      },
+      "baseSheetActions": {
+        "sheetActions": {
+          "isEditMode": false
+        }
       }
-    },
-    "sheetActions": {
-      "isEditMode": true
     },
 
     "PlayerCharacter": {
-      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "templates": ["baseAttributes", "baseSkills", "baseActions", "baseSheetActions"],
       "type": "PlayerCharacter",
       "surname": "",
       "race": "",
@@ -141,12 +520,12 @@
     },
     
     "NPC": {
-      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "templates": ["baseAttributes", "baseSkills", "baseActions", "baseSheetActions"],
       "type": "NPC"
     },
     
     "Swarm": {
-      "templates": ["baseAttributes", "baseSkills", "baseActions"],
+      "templates": ["baseAttributes", "baseSkills", "baseActions", "baseSheetActions"],
       "type": "Swarm",
       "swarmSize": {
         "current": 0,

@@ -54,6 +54,9 @@ export default class SpheraCharacterSheet extends ActorSheet
         const data = super.getData(options);
 
         console.log("SPHERA | Item Character Data (initial info)", data);
+
+
+        this.debugCleanup();
         
         let sheetData = {
             owner: this.actor.isOwner,
@@ -67,6 +70,7 @@ export default class SpheraCharacterSheet extends ActorSheet
         };
         this.setAttributeBonusAsTexts(sheetData);
         this.updateMaxReserveValues(sheetData);
+        this.updateSkillsValues(sheetData);
         
         console.log("SPHERA | Item Character Data", sheetData);
         return sheetData;
@@ -146,6 +150,9 @@ export default class SpheraCharacterSheet extends ActorSheet
         sheetData.system.reserve.mental.maxDisplayed = sheetData.system.reserve.mental.max + sheetData.system.reserve.mental.bonus;
         this.actor.system.reserve.mental.maxDisplayed = sheetData.system.reserve.mental.max + sheetData.system.reserve.mental.bonus;
 
+        sheetData.system.reserve.physical.halfUp = Math.ceil(sheetData.system.reserve.physical.maxDisplayed * 0.5);
+        sheetData.system.reserve.mental.halfUp = Math.ceil(sheetData.system.reserve.mental.maxDisplayed * 0.5);
+
         let physicalMalus = sheetData.system.reserve.physical.current - (sheetData.system.reserve.physical.maxDisplayed * 0.5);
         if (physicalMalus > 0) physicalMalus = 0;
         physicalMalus = Math.floor(physicalMalus);
@@ -153,18 +160,202 @@ export default class SpheraCharacterSheet extends ActorSheet
         let mentalMalus = sheetData.system.reserve.mental.current - (sheetData.system.reserve.mental.maxDisplayed * 0.5);
         if (mentalMalus > 0) mentalMalus = 0;
         mentalMalus = Math.floor(mentalMalus);
-        
-        console.log("SPHERA | Physical malus: ", physicalMalus);
-        console.log("SPHERA | Mental malus: ", mentalMalus);
 
         sheetData.system.reserve.physical.malus = physicalMalus;
         sheetData.system.reserve.mental.malus = mentalMalus;
 
         this.actor.system.reserve.physical.malus = physicalMalus;
         this.actor.system.reserve.mental.malus = mentalMalus;
+    }
+
+    updateSkillsValues(sheetData = {}) {
+
+        console.log("SPHERA | Update skills values", sheetData.system.skills);
         
+        if (sheetData.system.sheetActions.isEditMode) this.updateAllSkills(sheetData);
+        else this.updateOwnedNotOwnedSkills(sheetData);
         
-        //sheetData.system.reserve.physical.malus =
+        console.log("SPHERA | Updated skills values", sheetData.system.skills);
+    }
+
+    updateAllSkills(sheetData = {}) {
+        sheetData.system.skills.all = {
+            "skillAsArray": [],
+            "maxCount": 0
+        };
+        
+        let combatSkills = [];
+        let craftSkills = [];
+        let socialSkills = [];
+        let magicSkills = [];
+
+        Object.keys(sheetData.system.skills.combatSkills).forEach(key => {
+            let skill = sheetData.system.skills.combatSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+            if (skill.level == null) skill.level = 0;
+
+            combatSkills.push(skill);
+        });
+
+        Object.keys(sheetData.system.skills.craftSkills).forEach(key => {
+            let skill = sheetData.system.skills.craftSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+            if (skill.level == null) skill.level = 0;
+            
+            craftSkills.push(skill);
+        });
+
+        Object.keys(sheetData.system.skills.socialSkills).forEach(key => {
+            let skill = sheetData.system.skills.socialSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+            if (skill.level == null) skill.level = 0;
+            
+            socialSkills.push(skill);
+        });
+
+        Object.keys(sheetData.system.skills.magicSkills).forEach(key => {
+            let skill = sheetData.system.skills.magicSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+            if (skill.level == null) skill.level = 0;
+            
+            magicSkills.push(skill);
+        });
+        
+        let maxCount = Math.max(combatSkills.length, craftSkills.length, socialSkills.length, magicSkills.length);
+        sheetData.system.skills.all.maxCount = maxCount;
+        
+        for (let i = 0; i < maxCount; i++) {
+            let arrayElement = {
+                combatSkill: combatSkills[i] || null,
+                craftSkill: craftSkills[i] || null,
+                socialSkill: socialSkills[i] || null,
+                magicSkill: magicSkills[i] || null
+            };
+            sheetData.system.skills.all.skillAsArray.push(arrayElement);
+        }
+    }
+    
+    updateOwnedNotOwnedSkills(sheetData = {}) {
+        sheetData.system.skills.owned = {
+            combatSkills: [],
+            craftSkills: [],
+            socialSkills: [],
+            magicSkills: [],
+            secretSkills: [],
+            maxCount: 0
+        };
+
+        sheetData.system.skills.notOwned = {
+            combatSkills: [],
+            craftSkills: [],
+            socialSkills: [],
+            magicSkills: [],
+            secretSkills: [],
+            maxCount: 0
+        };
+
+        Object.keys(sheetData.system.skills.combatSkills).forEach(key => {
+            let skill = sheetData.system.skills.combatSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+
+            if (skill.owned) sheetData.system.skills.owned.combatSkills.push(skill);
+            else sheetData.system.skills.notOwned.combatSkills.push(skill);
+
+        });
+
+        Object.keys(sheetData.system.skills.craftSkills).forEach(key => {
+            let skill = sheetData.system.skills.craftSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+
+            if (skill.owned) sheetData.system.skills.owned.craftSkills.push(skill);
+            else sheetData.system.skills.notOwned.craftSkills.push(skill);
+        });
+
+        Object.keys(sheetData.system.skills.socialSkills).forEach(key => {
+            let skill = sheetData.system.skills.socialSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+
+            if (skill.owned) sheetData.system.skills.owned.socialSkills.push(skill);
+            else sheetData.system.skills.notOwned.socialSkills.push(skill);
+        });
+
+        Object.keys(sheetData.system.skills.magicSkills).forEach(key => {
+            let skill = sheetData.system.skills.magicSkills[key];
+            skill.displayName = game.i18n.localize("sphera.skills.list." + key);
+            skill.baseName = key;
+
+            if (skill.owned) sheetData.system.skills.owned.magicSkills.push(skill);
+            else sheetData.system.skills.notOwned.magicSkills.push(skill);
+        });
+
+        sheetData.system.skills.owned.maxCount = Math.max(
+            sheetData.system.skills.owned.combatSkills.length,
+            sheetData.system.skills.owned.craftSkills.length,
+            sheetData.system.skills.owned.socialSkills.length,
+            sheetData.system.skills.owned.magicSkills.length,
+            sheetData.system.skills.owned.secretSkills.length
+        );
+
+        sheetData.system.skills.notOwned.maxCount = Math.max(
+            sheetData.system.skills.notOwned.combatSkills.length,
+            sheetData.system.skills.notOwned.craftSkills.length,
+            sheetData.system.skills.notOwned.socialSkills.length,
+            sheetData.system.skills.notOwned.magicSkills.length,
+            sheetData.system.skills.notOwned.secretSkills.length
+        );
+        
+        sheetData.system.skills.owned.skillAsArray = [];
+        for (let i = 0; i < sheetData.system.skills.owned.maxCount; i++) {
+            let arrayElement = {
+                combatSkill: sheetData.system.skills.owned.combatSkills[i] || null,
+                craftSkill: sheetData.system.skills.owned.craftSkills[i] || null,
+                socialSkill: sheetData.system.skills.owned.socialSkills[i] || null,
+                magicSkill: sheetData.system.skills.owned.magicSkills[i] || null
+            };
+            sheetData.system.skills.owned.skillAsArray.push(arrayElement);
+        }
+
+        sheetData.system.skills.notOwned.skillAsArray = [];
+        for (let i = 0; i < sheetData.system.skills.notOwned.maxCount; i++) {
+            let arrayElement = {
+                combatSkill: sheetData.system.skills.notOwned.combatSkills[i] || null,
+                craftSkill: sheetData.system.skills.notOwned.craftSkills[i] || null,
+                socialSkill: sheetData.system.skills.notOwned.socialSkills[i] || null,
+                magicSkill: sheetData.system.skills.notOwned.magicSkills[i] || null
+            };
+            sheetData.system.skills.notOwned.skillAsArray.push(arrayElement);
+        }
+    };
+
+    debugCleanup() {
+        delete this.actor.system.combatSkills;
+        delete this.actor.system.craftSkills;
+        delete this.actor.system.socialSkills;
+        delete this.actor.system.magicSkills;
+
+        Object.keys(this.actor.system.skills.combatSkills).forEach(key => {
+            let skill = this.actor.system.skills.combatSkills[key];
+            if (key === "") delete this.actor.system.skills.combatSkills[key];
+        });
+        Object.keys(this.actor.system.skills.craftSkills).forEach(key => {
+            let skill = this.actor.system.skills.craftSkills[key];
+            if (key === "") delete this.actor.system.skills.craftSkills[key];
+        });
+        Object.keys(this.actor.system.skills.socialSkills).forEach(key => {
+            let skill = this.actor.system.skills.socialSkills[key];
+            if (key === "") delete this.actor.system.skills.socialSkills[key];
+        });
+        Object.keys(this.actor.system.skills.magicSkills).forEach(key => {
+            let skill = this.actor.system.skills.magicSkills[key];
+            if (key === "") delete this.actor.system.skills.magicSkills[key];
+        });
     }
 
     activateListeners(html) {
@@ -181,6 +372,7 @@ export default class SpheraCharacterSheet extends ActorSheet
         if (this.actor.isOwner) {
             html.find(".test-roll").click((event) => {this._onTestRoll(event);});
             html.find(".roll-attribute").click((event) => {this._onRollAttribute(event);});
+            html.find(".roll-skill").click((event) => {this._onRollSkill(event);});
         }
         
         //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
@@ -196,9 +388,6 @@ export default class SpheraCharacterSheet extends ActorSheet
     _onItemCreate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-
-        console.log("SPHERA | SpheraCharacterSheet::_onItemCreate called", element);
-        
         let itemData = {
             name: game.i18n.localize("sphera.sheet.newWeapon"),
             type: element.dataset.type
@@ -239,7 +428,6 @@ export default class SpheraCharacterSheet extends ActorSheet
         if (this.actor.system.sheetActions.isEditMode) return;
         event.preventDefault();
         
-        console.log("SPHERA | ReservePhysicalCur", this.actor.system);
         let currentValue = this.actor.system.reserve.physical.current;
         let newValue;
         if (event.type === "click")
@@ -254,7 +442,6 @@ export default class SpheraCharacterSheet extends ActorSheet
     _onReserveMentalCur(event) {
         if (this.actor.system.sheetActions.isEditMode) return;
         event.preventDefault();
-        console.log("SPHERA | ReserveMentalCur", this.actor.system);
         let currentValue = this.actor.system.reserve.mental.current;
         let newValue;
         if (event.type === "click")
@@ -307,7 +494,6 @@ export default class SpheraCharacterSheet extends ActorSheet
         event.preventDefault();
         let element = event.currentTarget;
         let attribute = element.dataset.attribute;
-        console.log("SPHERA | Roll attribute clicked", attribute);
         
         let info = {
             attribute: attribute,
@@ -316,5 +502,20 @@ export default class SpheraCharacterSheet extends ActorSheet
         
         return await Dice.AttributeSkillCheck(info, this.actor.system);
     }
+    
+        async _onRollSkill(event) {
+            event.preventDefault();
+            let element = event.currentTarget;
+            let skill = element.dataset.skill;
+            let skillType = element.dataset.skillType;
+            
+            let info = {
+                skill: skill,
+                skillType: skillType,
+                useDialog: true
+            }
+            
+            return await Dice.SkillCheck(info, this.actor.system);
+        }
     
 }

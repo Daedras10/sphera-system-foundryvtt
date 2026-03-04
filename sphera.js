@@ -44,6 +44,8 @@ function registerHandelbarsHelpers() {
     Handlebars.registerHelper("concat", function(s1, s2, s3 = "") { return s1 + s2 + s3;});
     Handlebars.registerHelper("isGreater", function(p1, p2) { return (p1 > p2)});
     Handlebars.registerHelper("isEqualORGreater", function(p1, p2) { return (p1 >= p2)});
+    Handlebars.registerHelper("isLess", function(p1, p2) { return (p1 < p2)});
+    Handlebars.registerHelper("isEqualORLess", function(p1, p2) { return (p1 <= p2)});
     Handlebars.registerHelper("ifOR", function(conditional1, conditional2) { return (conditional1 || conditional2)});
     Handlebars.registerHelper("doLog", function(value) { console.log(value)});
     Handlebars.registerHelper("toBoolean", function(string) { return (string === "true")});
@@ -70,6 +72,10 @@ function registerHandelbarsHelpers() {
         if (value == 0 || value == "0") return true;
         if (value == null|| value  == "") return false;
         return true;
+    });
+
+    Handlebars.registerHelper('notNull', function(value) {
+        return value != null;
     });
 }
 
