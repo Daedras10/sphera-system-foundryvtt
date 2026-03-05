@@ -119,10 +119,20 @@
       "newItem": "Nouvel objet"
     },
     "dialog": {
+      "generic": {
+        "roll": "Lancer le jet",
+        "cancel": "Annuler"
+      },
+      
+      "attributeCheck": {
+        "title": "Jet de caractéristique",
+        "attributeBonus": "Bonus de caractéristique",
+        "attributeLevelBonus": "Bonus due aux niveaux",
+        "attributeDices": "Dés de caractéristique",
+        "attributeUsed": "Caractéristique utilisée"
+      },
       "skillCheck": {
         "title": "Jet de compétence",
-        "roll": "Lancer le jet",
-        "cancel": "Annuler",
         "skillBonus": "Bonus au jet",
         "skillUsed": "Compétence utilisée",
         "noSkillUsed": "Aucune compétence utilisée",
@@ -137,8 +147,8 @@
         "attributeBonus": "Bonus de caractéristique",
         "attributeLevelBonus": "Bonus due aux niveaux",
         "attributeDices": "Dés de caractéristique",
-        "attributeUsed": "Caractéristique utilisée"
-        
+        "attributeUsed": "Caractéristique utilisée",
+        "skillModifiers": "Bonus de compétence"
       }
     }
   }

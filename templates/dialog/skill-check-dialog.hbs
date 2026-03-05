@@ -1,0 +1,67 @@
+<form>
+<!--    <div class="form-group">-->
+<!--        <label>{{localize "sphera.dialog.skillCheck.currentRoll" }}</label>-->
+<!--        <div>{{ currentRollInfo.formula }}</div>-->
+<!--    </div>-->
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.skillUsed" }}</label>
+        <div>{{ currentRollInfo.skill.displayName }}</div>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.skillModifiers" }}</label>
+        <div>{{ currentRollInfo.skill.modifiers }}</div>
+    </div>
+    
+    
+    
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.superiority" }}</label>
+        <div>{{ currentRollInfo.superiority }}</div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.inferiority" }}</label>
+        <div>{{ currentRollInfo.inferiority }}</div>
+    </div>
+    <line></line>
+    <div class="form-group">
+        <label>Others</label>
+        <div>TODO</div>
+    </div>
+    <line></line>
+    <br>
+
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.attributeUsed" }}</label>
+        <select name="attributeUsed">
+            <option value="">{{localize "sphera.dialog.skillCheck.noAttributeUsed" }}</option>
+            {{#each currentRollInfo.attributes as |attribute|}}
+                <option value="{{attribute.baseName}}">{{attribute.displayName }}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.skillBonus" }}</label>
+        <input type="number" min="0" name="skillBonus" value="0" />
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.superiority" }}</label>
+        <input type="number" min="0" name="superiority" value="{{ currentRollInfo.superiority }}" />
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.inferiority" }}</label>
+        <input type="number" min="0" name="inferiority" value="{{ currentRollInfo.inferiority }}" />
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.difficulty" }}</label>
+        <input type="number" min="0" name="difficulty" value="0" />
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.useReserve" }}</label>
+        <input type="checkbox" name="useReserve"/>
+    </div>
+    <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.reserveToUse" }}</label>
+        <input type="number" min="0" name="reserveToUse" value="0" />
+    </div>
+</form>
