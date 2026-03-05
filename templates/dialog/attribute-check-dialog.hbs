@@ -40,6 +40,15 @@
     <br>
 
     <div class="form-group">
+        <label>{{localize "sphera.dialog.skillCheck.skillUsed" }}</label>
+        <select name="skillUsed">
+            <option value="">{{localize "sphera.dialog.skillCheck.noSkillUsed" }}</option>
+            {{#each currentRollInfo.skills as |skill|}}
+                <option value="{{skill.baseName}}">{{skill.displayName }}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
         <label>{{localize "sphera.dialog.skillCheck.skillBonus" }}</label>
         <input type="number" min="0" name="skillBonus" value="0" />
     </div>

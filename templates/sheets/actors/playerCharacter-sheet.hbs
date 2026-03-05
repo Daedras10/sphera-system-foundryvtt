@@ -303,17 +303,49 @@
             
             {{#each system.skills.owned.skillAsArray as |skill index|}}
             <tr>
-                <td style="width: 150px;">{{ skill.combatSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.combatSkill.level }}</td>
+                <td style="width: 150px;">
+                    <a class="roll-skill" data-skill-type="combatSkills" data-skill="{{ skill.combatSkill.baseName }}">
+                        {{ skill.combatSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="combatSkills" data-skill="{{ skill.combatSkill.baseName }}">
+                        {{ skill.combatSkill.level }}
+                    </a>
+                </td>
                 
-                <td style="width: 150px;padding-left: 25px;">{{ skill.craftSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.craftSkill.level }}</td>
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="craftSkills" data-skill="{{ skill.craftSkill.baseName }}">
+                        {{ skill.craftSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="craftSkills" data-skill="{{ skill.craftSkill.baseName }}">
+                        {{ skill.craftSkill.level }}
+                    </a>
+                </td>
                 
-                <td style="width: 150px;padding-left: 25px;">{{ skill.socialSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.socialSkill.level }}</td>
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="socialSkills" data-skill="{{ skill.socialSkill.baseName }}">
+                        {{ skill.socialSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="socialSkills" data-skill="{{ skill.socialSkill.baseName }}">
+                        {{ skill.socialSkill.level }}
+                    </a>
+                </td>
                 
-                <td style="width: 150px;padding-left: 25px;">{{ skill.magicSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.magicSkill.level }}</td>
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="magicSkills" data-skill="{{ skill.magicSkill.baseName }}">
+                        {{ skill.magicSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="magicSkills" data-skill="{{ skill.magicSkill.baseName }}">
+                        {{ skill.magicSkill.level }}
+                    </a>
+                </td>
             </tr>
             {{/each }}
         </table>
@@ -330,17 +362,49 @@
             
             {{#each system.skills.notOwned.skillAsArray as |skill index|}}
             <tr>
-                <td style="width: 150px;">{{ skill.combatSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.combatSkill.level }}</td>
-                
-                <td style="width: 150px;padding-left: 25px;">{{ skill.craftSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.craftSkill.level }}</td>
-                
-                <td style="width: 150px;padding-left: 25px;">{{ skill.socialSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.socialSkill.level }}</td>
-                
-                <td style="width: 150px;padding-left: 25px;">{{ skill.magicSkill.displayName }}</td>
-                <td style="text-align: center; width: 50px">{{ skill.magicSkill.level }}</td>
+                <td style="width: 150px;">
+                    <a class="roll-skill" data-skill-type="combatSkills" data-skill="{{ skill.combatSkill.baseName }}">
+                        {{ skill.combatSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="combatSkills" data-skill="{{ skill.combatSkill.baseName }}">
+                        {{ skill.combatSkill.level }}
+                    </a>
+                </td>
+
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="craftSkills" data-skill="{{ skill.craftSkill.baseName }}">
+                        {{ skill.craftSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="craftSkills" data-skill="{{ skill.craftSkill.baseName }}">
+                        {{ skill.craftSkill.level }}
+                    </a>
+                </td>
+
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="socialSkills" data-skill="{{ skill.socialSkill.baseName }}">
+                        {{ skill.socialSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="socialSkills" data-skill="{{ skill.socialSkill.baseName }}">
+                        {{ skill.socialSkill.level }}
+                    </a>
+                </td>
+
+                <td style="width: 150px;padding-left: 25px;">
+                    <a class="roll-skill" data-skill-type="magicSkills" data-skill="{{ skill.magicSkill.baseName }}">
+                        {{ skill.magicSkill.displayName }}
+                    </a>
+                </td>
+                <td style="text-align: center; width: 50px">
+                    <a class="roll-skill" data-skill-type="magicSkills" data-skill="{{ skill.magicSkill.baseName }}">
+                        {{ skill.magicSkill.level }}
+                    </a>
+                </td>
             </tr>
             {{/each }}
         </table>

@@ -42,6 +42,8 @@ export async function AttributeSkillCheck(info, actorInfo) {
     let otherBonuses = 0;
     let reserveMalus = 0;
     let isPhysical = ["strength", "endurance", "speed", "agility"].includes(info.attribute);
+    let skills = getSkills(actorInfo);
+    let skillBonus = 0;
     
     console.log("Attribute skillCheck, Info:", info);
     console.log("Attribute skillCheck, actorInfo:", actorInfo);
@@ -134,8 +136,9 @@ export async function AttributeSkillCheck(info, actorInfo) {
         reserveMalus: reserveMalus,
         superiority: superiority,
         inferiority: inferiority,
+        skills: skills,
     };
-
+    
     if (info.useDialog)
     {
         let checkOptions = await GetSkillCheckOptions(info.attribute, currentRollInfo);
@@ -150,6 +153,7 @@ export async function AttributeSkillCheck(info, actorInfo) {
         inferiority = checkOptions.inferiority;
         otherBonuses = checkOptions.skillBonus;
         //otherBonuses = checkOptions.useReserve ? checkOptions.reserveToUse : 0;
+        
 
         totalDices = (attributeDices + superiority - inferiority) - 3;
         dicesToRoll = 3;
@@ -163,6 +167,26 @@ export async function AttributeSkillCheck(info, actorInfo) {
         }
         
         rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${otherBonuses} + ${reserveMalus}`;
+        
+        if (checkOptions.skillUsed !== "") {
+            let skill = skills.find(s => s.baseName === checkOptions.skillUsed);
+            if (skill) {
+                let skillLevel = skill.level + skill.levelModifiers;
+                let skillModifiers = skill.modifiers;
+                if (skill.parent)
+                {
+                    let skillParent = skills.find(s => s.baseName === skill.parent);
+                    if (skillParent) {
+                        skillLevel += skillParent.level + skillParent.levelModifiers;
+                        skillModifiers += skillParent.modifiers;
+                    }
+                }
+
+                skillBonus = 2 * skillLevel + skillModifiers;
+
+                rollFormula += ` + ${skillBonus}`;
+            }
+        }
     }
     
     let rollData = {}
@@ -179,9 +203,10 @@ export async function SkillCheck(info, actorInfo) {
     // Similar to AttributeSkillCheck but with more customizable options, like choosing the attribute dices to use, or adding flat bonuses.
     // The info object should contain all the necessary information to build the roll formula, and the dialog should allow the player to modify it before rolling.
     // TODO
+    console.log(info);
 }
 export async function GetSkillCheckOptions(skillType, currentRollInfo) {
-    const template = "systems/sphera/templates/dialog/skill-check-dialog.hbs";
+    const template = "systems/sphera/templates/dialog/attribute-check-dialog.hbs";
     const html = await renderTemplate(template, {currentRollInfo});
     
     return new Promise(resolve => {
@@ -214,6 +239,7 @@ function _processSkillCheckOptions(form) {
         difficulty: parseInt(form.difficulty.value),
         useReserve: form.useReserve.checked,
         reserveToUse: parseInt(form.reserveToUse.value),
+        skillUsed: form.skillUsed.value,
     }
 }
 
@@ -248,4 +274,28 @@ function getMaxReserves(actorInfo, isPhysical)
     
     Max += actorInfo.reserve.mental.bonus;
     return Max;
+}
+
+function getSkills(actorInfo) {
+    let skills = [];
+
+    Object.keys(actorInfo.skills.combatSkills).forEach(key => {
+        let skill = actorInfo.skills.combatSkills[key];
+        skills.push(skill);
+    });
+    Object.keys(actorInfo.skills.craftSkills).forEach(key => {
+        let skill = actorInfo.skills.craftSkills[key];
+        skills.push(skill);
+    });
+    Object.keys(actorInfo.skills.socialSkills).forEach(key => {
+        let skill = actorInfo.skills.socialSkills[key];
+        skills.push(skill);
+    });
+    Object.keys(actorInfo.skills.magicSkills).forEach(key => {
+        let skill = actorInfo.skills.magicSkills[key];
+        skills.push(skill);
+    });
+    
+    console.log("Skills extracted from actorInfo:", skills);
+    return skills;
 }
