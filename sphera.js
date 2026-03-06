@@ -3,14 +3,18 @@ import * as Chat from "./modules/chat.js";
 import SpheraItemSheet from "./modules/sheets/SpheraItemSheet.js";
 import SpheraCharacterSheet from "./modules/sheets/SpheraCharacterSheet.js";
 import SpheraActor from "./modules/objects/SpheraActor.js";
+import SpheraCombat from "./modules/combat/SpheraCombat.js";
+import SpheraCombatant from "./modules/combat/SpheraCombatant.js";
 
 Hooks.once("init", async () => {
 
     console.log("SPHERA | Initalizing Sphera Core System");
     
     CONFIG.sphera = sphera;
-    CONFIG.Item.entityClass = SpheraItemSheet;
-    CONFIG.Actor.entityClass = SpheraActor;
+    //CONFIG.Item.documentClass = SpheraItemSheet;
+    CONFIG.Actor.documentClass = SpheraActor;
+    CONFIG.Combat.documentClass = SpheraCombat;
+    CONFIG.Combatant.documentClass = SpheraCombatant;
     
     registerItemSheets();
     registerActorSheets();

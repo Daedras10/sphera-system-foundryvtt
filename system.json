@@ -39,5 +39,5 @@
         "units": "m"
     },
     "primaryTokenAttribute": "attributes.hp",
-    "initiative": "@attributes.speed.dices D10 + @attributes.speed.modifier"
+    "initiative": "3D10 + @attributes.speed.modifiers"
 }
