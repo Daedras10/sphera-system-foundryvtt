@@ -1,0 +1,13 @@
+<div class="chat-card weapon" data-item-id="{{_id}}" data-owner-id="{{owner}}">
+    <div class="card-content">
+        <h3>{{data.itemName}}</h3>
+        <p>{{data.description}}</p>
+        <p>{{localize "sphera.weapon.attackType" }}: TODO</p>
+        <p>{{localize "sphera.weapon.usageBonus" }}: {{system.usageBonus}}</p>
+        <p>{{localize "sphera.weapon.range" }}: {{system.range}}</p>
+        <p>{{localize "sphera.weapon.damageBonus" }}: {{system.damageBonus}}</p>
+    </div>
+    <div class="card-buttons">
+        <button class="weapon-attack-button">{{localize "sphera.chat.weapon.attack" }}</button>
+    </div>
+</div>

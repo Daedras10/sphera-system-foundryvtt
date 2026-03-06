@@ -1,0 +1,9 @@
+{{> "templates/dice/roll.html" }}
+
+<div>
+    <p>{{ localize "sphera.dialog.attributeCheck.attributeUsed" }}: {{rollInfo.attribute}}</p>
+    <p>{{ localize "sphera.dialog.skillCheck.skillUsed" }}: {{rollInfo.skill}}</p>
+    <p>{{ localize "sphera.dialog.generic.superiority" }}: {{rollInfo.superiority}}</p>
+    <p>{{ localize "sphera.dialog.generic.inferiority" }}: {{rollInfo.inferiority}}</p>
+    <p>{{ localize "sphera.dialog.skillCheck.skillBonus" }}: {{rollInfo.otherBonuses}}</p>
+</div>

@@ -121,7 +121,9 @@
     "dialog": {
       "generic": {
         "roll": "Lancer le jet",
-        "cancel": "Annuler"
+        "cancel": "Annuler",
+        "superiority": "Supériorité",
+        "inferiority": "Infériorité"
       },
       
       "attributeCheck": {

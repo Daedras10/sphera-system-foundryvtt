@@ -373,6 +373,7 @@ export default class SpheraCharacterSheet extends ActorSheet
             html.find(".test-roll").click((event) => {this._onTestRoll(event);});
             html.find(".roll-attribute").click((event) => {this._onRollAttribute(event);});
             html.find(".roll-skill").click((event) => {this._onRollSkill(event);});
+            html.find(".item-title-click").click((event) => {this._onItemTitleClick(event);});
         }
         
         //html.find(".inline-edit").change((event) => {this._onInlineEdit(event);}); //item.update({[event.currentTarget.name]: event.currentTarget.value});
@@ -412,6 +413,17 @@ export default class SpheraCharacterSheet extends ActorSheet
         let element = event.currentTarget;
         let itemId = element.closest(".actor-item").dataset.itemId;
         return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    }
+
+    _onItemTitleClick(event) {
+        event.preventDefault();
+        const itemID = event.currentTarget.closest(".item").dataset.itemId;
+        const item = this.actor.items.get(itemID);
+        if (!item) {
+            console.warn("SPHERA | Item not found for title click", itemID);
+            return;
+        }
+        item.roll();
     }
     
     _onInlineEdit(event) {

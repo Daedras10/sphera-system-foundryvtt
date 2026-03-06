@@ -2,12 +2,15 @@ import { sphera } from "./modules/config.js";
 import * as Chat from "./modules/chat.js";
 import SpheraItemSheet from "./modules/sheets/SpheraItemSheet.js";
 import SpheraCharacterSheet from "./modules/sheets/SpheraCharacterSheet.js";
+import SpheraActor from "./modules/objects/SpheraActor.js";
 
 Hooks.once("init", async () => {
 
     console.log("SPHERA | Initalizing Sphera Core System");
     
     CONFIG.sphera = sphera;
+    CONFIG.Item.entityClass = SpheraItemSheet;
+    CONFIG.Actor.entityClass = SpheraActor;
     
     registerItemSheets();
     registerActorSheets();
@@ -17,7 +20,8 @@ Hooks.once("init", async () => {
 });
 
 Hooks.on("renderChatLog", async (app, html, data) => {Chat.addChatListeners(html)});
-
+Hooks.on("getChatLogEntryContext", async (html, options) => {Chat.addChatMessageContextOptions(html, options)});
+Hooks.on("renderChatMessage", async (app, html, data) => {Chat.handleRenderChatMessage(app, html, data)});
 
 function registerItemSheets() {
 
@@ -32,7 +36,10 @@ function registerActorSheets() {
 }
 
 async function preloadHandlebarsTemplates() {
-    const templatePaths = [];
+    const templatePaths = [
+        "templates/dice/roll.html",
+        "templates/dice/tooltip.html",
+    ];
     return loadTemplates(templatePaths);
 }
 

@@ -3,6 +3,8 @@ export default class SpheraActor extends Actor
     prepareData() 
     {
         super.prepareData();
+        
+        
     }
 
     prepareDerivedData()

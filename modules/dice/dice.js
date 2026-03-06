@@ -44,6 +44,7 @@ export async function AttributeSkillCheck(info, actorInfo) {
     let isPhysical = ["strength", "endurance", "speed", "agility"].includes(info.attribute);
     let skills = getSkills(actorInfo);
     let skillBonus = 0;
+    let skill = null;
     
     console.log("Attribute skillCheck, Info:", info);
     console.log("Attribute skillCheck, actorInfo:", actorInfo);
@@ -169,7 +170,7 @@ export async function AttributeSkillCheck(info, actorInfo) {
         rollFormula = `${dicesToRoll}d10${keepType} + ${attributeLevelBonus} + ${attributeBonus} + ${otherBonuses} + ${reserveMalus}`;
         
         if (checkOptions.skillUsed !== "") {
-            let skill = skills.find(s => s.baseName === checkOptions.skillUsed);
+            skill = skills.find(s => s.baseName === checkOptions.skillUsed);
             if (skill) {
                 let skillLevel = skill.level + skill.levelModifiers;
                 let skillModifiers = skill.modifiers;
@@ -189,13 +190,30 @@ export async function AttributeSkillCheck(info, actorInfo) {
         }
     }
     
+    const messageTemplate = "systems/sphera/templates/chat/attribute-check-chat.hbs";
     let rollData = {}
-    let messageData = {
-        user: game.user._id,
-        speaker: ChatMessage.getSpeaker({actor: this.actor})
-    }
 
     let roll = await new Roll(rollFormula, rollData).roll();
+    let rollInfo = {
+        formula: rollFormula,
+        attribute: game.i18n.localize("sphera.characteristics.attributes." + info.attribute),
+        skill: skill ? skill.displayName : game.i18n.localize("sphera.dialog.skillCheck.noSkillUsed"),
+        inferiority: inferiority,
+        superiority: superiority,
+        otherBonuses: otherBonuses > 0 ? "+" + otherBonuses : otherBonuses,
+    }
+    console.log(rollInfo);
+    roll.tooltip = await roll.getTooltip();
+    roll.rollInfo = rollInfo;
+    console.log("Roll object before rendering template:", roll);
+    
+    let renderedRoll = await renderTemplate(messageTemplate, roll);
+    let messageData = {
+        user: game.user._id,
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+    }
+    
+    messageData.content = renderedRoll;
     await roll.toMessage(messageData);
 }
 
@@ -243,73 +261,6 @@ export async function SkillCheck(info, actorInfo) {
         attributes: attributes,
     };
     
-    /*
-    
-    switch (info.attribute) {
-        case "strength":
-            attributeDices = actorInfo.attributes.strength.dices;
-            attributeLevelBonus = actorInfo.attributes.strength.levelModifiers;
-            attributeBonus = actorInfo.attributes.strength.modifiers;
-            break;
-        case "endurance":
-            attributeDices = actorInfo.attributes.endurance.dices;
-            attributeLevelBonus = actorInfo.attributes.endurance.levelModifiers;
-            attributeBonus = actorInfo.attributes.endurance.modifiers;
-            break;
-        case "speed":
-            attributeDices = actorInfo.attributes.speed.dices;
-            attributeLevelBonus = actorInfo.attributes.speed.levelModifiers;
-            attributeBonus = actorInfo.attributes.speed.modifiers;
-            break;
-        case "agility":
-            attributeDices = actorInfo.attributes.agility.dices;
-            attributeLevelBonus = actorInfo.attributes.agility.levelModifiers;
-            attributeBonus = actorInfo.attributes.agility.modifiers;
-            break;
-        case "address":
-            attributeDices = actorInfo.attributes.address.dices;
-            attributeLevelBonus = actorInfo.attributes.address.levelModifiers;
-            attributeBonus = actorInfo.attributes.address.modifiers;
-            break;
-        case "charisma":
-            attributeDices = actorInfo.attributes.charisma.dices;
-            attributeLevelBonus = actorInfo.attributes.charisma.levelModifiers;
-            attributeBonus = actorInfo.attributes.charisma.modifiers;
-            break;
-        case "perception":
-            attributeDices = actorInfo.attributes.perception.dices;
-            attributeLevelBonus = actorInfo.attributes.perception.levelModifiers;
-            attributeBonus = actorInfo.attributes.perception.modifiers;
-            break;
-        case "intellect":
-            attributeDices = actorInfo.attributes.intellect.dices;
-            attributeLevelBonus = actorInfo.attributes.intellect.levelModifiers;
-            attributeBonus = actorInfo.attributes.intellect.modifiers;
-            break;
-        case "willpower":
-            attributeDices = actorInfo.attributes.willpower.dices;
-            attributeLevelBonus = actorInfo.attributes.willpower.levelModifiers;
-            attributeBonus = actorInfo.attributes.willpower.modifiers;
-            break;
-        case "magic":
-            attributeDices = actorInfo.attributes.magic.dices;
-            attributeLevelBonus = actorInfo.attributes.magic.levelModifiers;
-            attributeBonus = actorInfo.attributes.magic.modifiers;
-            break;
-        default:
-            console.warn("Unknown attribute for skill check:", info.attribute);
-            return;
-    }
-
-    let reserveMax = getMaxReserves(actorInfo, isPhysical);
-    let currentReserve = isPhysical ? actorInfo.reserve.physical.current : actorInfo.reserve.mental.current;
-    reserveMalus = currentReserve - (reserveMax * 0.5);
-    if (reserveMalus > 0) reserveMalus = 0;
-    reserveMalus = Math.floor(reserveMalus);
-    console.log("Reserve malus calculated:", reserveMalus, "Current reserve:", currentReserve, "Reserve max:", reserveMax);
-    
-     */
-
     if (info.useDialog)
     {
         let checkOptions = await GetSkillCheckOptions(info.skill, currentRollInfo);
@@ -387,15 +338,31 @@ export async function SkillCheck(info, actorInfo) {
             rollFormula += ` + ${skillBonus}`;
         }
     }
-    
 
+    const messageTemplate = "systems/sphera/templates/chat/attribute-check-chat.hbs";
     let rollData = {}
-    let messageData = {
-        user: game.user._id,
-        speaker: ChatMessage.getSpeaker({actor: this.actor})
-    }
 
     let roll = await new Roll(rollFormula, rollData).roll();
+    let rollInfo = {
+        formula: rollFormula,
+        attribute: game.i18n.localize("sphera.characteristics.attributes." + attributeInfo.baseName),
+        skill: skillInfo ? skillInfo.displayName : game.i18n.localize("sphera.dialog.skillCheck.noSkillUsed"),
+        inferiority: inferiority,
+        superiority: superiority,
+        otherBonuses: otherBonuses > 0 ? "+" + otherBonuses : otherBonuses,
+    }
+    console.log(rollInfo);
+    roll.tooltip = await roll.getTooltip();
+    roll.rollInfo = rollInfo;
+    console.log("Roll object before rendering template:", roll);
+
+    let renderedRoll = await renderTemplate(messageTemplate, roll);
+    let messageData = {
+        user: game.user._id,
+        speaker: ChatMessage.getSpeaker({actor: this.actor}),
+    }
+
+    messageData.content = renderedRoll;
     await roll.toMessage(messageData);
 }
 export async function GetAttributeCheckOptions(attributeType, currentRollInfo) {
